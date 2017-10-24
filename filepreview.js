@@ -80,9 +80,9 @@ module.exports = {
         return callback(true);
       } else {
         if ( fileType == 'video' ) {
-          var ffmpegArgs = ['-y', '-i', input, '-vf', 'thumbnail', '-frames:v', '1', output];
+          var ffmpegArgs = ['-ss', '0', '-i', input, '-vframes', '1', '-vcodec',  'mjpeg', '-an', '-y', output];
           if (options.width > 0 && options.height > 0) {
-            ffmpegArgs.splice(4, 1, 'thumbnail,scale=' + options.width + ':' + options.height);
+            ffmpegArgs.splice(8, 0, '-vf' , 'scale='+ options.width + ':' + '-1');
           }
           child_process.execFile('ffmpeg', ffmpegArgs, function(error) {
             if (input_original.indexOf("http://") == 0 || input_original.indexOf("https://") == 0) {
