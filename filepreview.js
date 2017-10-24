@@ -82,9 +82,8 @@ module.exports = {
         if ( fileType == 'video' ) {
           var ffmpegArgs = ['-ss', '0', '-i', input, '-vframes', '1', '-vcodec',  'mjpeg', '-an', '-y', output];
           if (options.width > 0 && options.height > 0) {
-            ffmpegArgs.splice(8, 0, '-vf' , 'scale='+ options.width + ':' + '-1');
+            ffmpegArgs.splice(8, 0, '-vf' , 'scale=' + options.width + ':-1');
           }
-          console.log('ffmpeg ' + ffmpegArgs.join(' '))
           child_process.execFile('ffmpeg', ffmpegArgs, function(error) {
             if (input_original.indexOf("http://") == 0 || input_original.indexOf("https://") == 0) {
               fs.unlinkSync(input);
